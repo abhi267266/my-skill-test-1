@@ -5,6 +5,10 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  email: {
+    type: String,
+    required: true
+  },
   college: {
     type: String,
     required: true
@@ -34,17 +38,22 @@ const studentSchema = new mongoose.Schema({
       required: true
     },
     date: {
-      type: Date,
+      type: String,
       required: true
     }
   }],
-    result: {
-      type: String,
-      enum: ['PASS', 'FAIL', 'On Hold', 'Didn’t Attempt'],
-      required: true
-    }
+  result: {
+    type: String,
+    enum: ['PASS', 'FAIL', 'On Hold', 'Didn’t Attempt'],
+    required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Employee',
+    required: true
+  }
 });
 
-const studentModel = mongoose.model('Student', studentSchema);
+const Student = mongoose.model('Student', studentSchema);
 
-module.exports = studentModel;
+module.exports = Student;

@@ -11,7 +11,8 @@ module.exports.login = async (req, res)=>{
 }
 
 module.exports.createSession = async (req, res)=>{
-    return res.send("hit the createSession")
+    req.flash('success', 'Logged in Successfully');
+    return res.redirect('/');
 }
 
 module.exports.create = async (req, res)=>{
@@ -22,7 +23,7 @@ module.exports.create = async (req, res)=>{
         const exEmployee = await Employee.findOne({email});
         if (exEmployee) {
             req.flash('error', 'Employee with this email already exists');
-            return res.redirect('/signup');
+            return res.redirect('/employee/log-in');
           }
 
         const hashedPassword = await bcrypt.hash(password, 10);

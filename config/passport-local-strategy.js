@@ -47,16 +47,19 @@ passport.serializeUser(function (employee, done) {
 });
 
 // Deserialize the employee from the key in the cookies
-passport.deserializeUser(function (id, done) {
-  Employee.findById(id, function (err, employee) {
-    if (err) {
-      console.log('Error in finding employee --> Passport');
-      return done(err);
+passport.deserializeUser(async function (id, done) {
+  try {
+    const employee = await Employee.findById(id);
+    if (!employee) {
+      return done(null, false);
     }
-
     return done(null, employee);
-  });
+  } catch (err) {
+    console.log('Error in finding employee --> Passport', err);
+    return done(err);
+  }
 });
+
 
 // Check if the employee is authenticated
 passport.checkAuthentication = function (req, res, next) {

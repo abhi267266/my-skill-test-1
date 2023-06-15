@@ -5,107 +5,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%=title %></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.2.0/dist/noty.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/noty@3.2.0/dist/noty.min.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
-        Employee Management
+        Student Management
       </a>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">Signup</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-        </ul>
+          <ul class="navbar-nav ml-auto">
+            <% if(locals.employee) { %> 
+              <li class="nav-item"> 
+                <a class="nav-link" href="#"><%=locals.employee.name%></a></span>
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link" href="/student/all">Students</a></span>
+              </li>
+              <%}else{%>
+                <li class="nav-item"> 
+                  <a class="nav-link" href="/signup">Signup</a>
+                </li>
+                <li class="nav-item"> 
+                  <a class="nav-link" href="/signup">Login</a>
+                </li>
+                
+                <%}%>
+
+          </ul>
       </div>
     </div>
+    </nav>
   <div class="container">
         <!-- Display flash messages -->
-        <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
-          <% messages.forEach(function(message) { %>
-            <div class="alert alert-<%= message.type %>">
-              <%= message.text %>
-            </div>
-          <% }); %>
-        <% } %>
 
     <!-- Form content -->
 
-    <h1>Student Details Form</h1>
-    <form action="/student/create" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" name="name" required>
-      </div>
-      <div class="mb-3">
-        <label for="college" class="form-label">College</label>
-        <input type="text" class="form-control" id="college" name="college" required>
-      </div>
-      <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select class="form-select" id="status" name="status" required>
-          <option value="placed">Placed</option>
-          <option value="not_placed">Not Placed</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="dsaFinalScore" class="form-label">DSA Final Score</label>
-        <input type="number" class="form-control" id="dsaFinalScore" name="dsaFinalScore" required>
-      </div>
-      <div class="mb-3">
-        <label for="webDFinalScore" class="form-label">WebD Final Score</label>
-        <input type="number" class="form-control" id="webDFinalScore" name="webDFinalScore" required>
-      </div>
-      <div class="mb-3">
-        <label for="reactFinalScore" class="form-label">React Final Score</label>
-        <input type="number" class="form-control" id="reactFinalScore" name="reactFinalScore" required>
-      </div>
-      <div class="mb-3">
-        <label for="companyName" class="form-label">Company Name</label>
-        <input type="text" class="form-control" id="companyName" name="companyName" required>
-      </div>
-      <div class="mb-3">
-        <label for="date" class="form-label">Date</label>
-        <input type="date" class="form-control" id="date" name="date" required>
-      </div>
-      <div class="mb-3">
-        <label for="result" class="form-label">Result</label>
-        <select class="form-select" id="result" name="result" required>
-          <option value="PASS">PASS</option>
-          <option value="FAIL">FAIL</option>
-          <option value="On Hold">On Hold</option>
-          <option value="Didn’t Attempt">Didn’t Attempt</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-  <script>
-    // Create a function to show notifications using Noty
-    function showNotification(type, message) {
-      new Noty({
-        type: type,
-        text: message,
-        layout: 'top',
-        theme: 'bootstrap-v5',
-        timeout: 3000 // Display for 3 seconds
-      }).show();
-    }
+    <!-- Form content -->
 
-    // Check if there are flash messages and display notifications
-    <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
-      <% messages.forEach(function(message) { %>
-        showNotification('<%= message.type %>', '<%= message.text %>');
-      <% }); %>
-    <% } %>
-  </script>
+<h1>Student Details Form</h1>
+<form action="/student/create-or-update" method="POST">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+  <div class="mb-3">
+    <label for="college" class="form-label">College</label>
+    <input type="text" class="form-control" id="college" name="college" required>
+  </div>
+  <div class="mb-3">
+    <label for="status" class="form-label">Status</label>
+    <select class="form-select" id="status" name="status" required>
+      <option value="placed">Placed</option>
+      <option value="not_placed">Not Placed</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="dsaFinalScore" class="form-label">DSA Final Score</label>
+    <input type="number" class="form-control" id="dsaFinalScore" name="dsaFinalScore" min="1" max="100" required>
+  </div>
+  <div class="mb-3">
+    <label for="webDFinalScore" class="form-label">WebD Final Score</label>
+    <input type="number" class="form-control" id="webDFinalScore" name="webDFinalScore" min="1" max="100" required>
+  </div>
+  <div class="mb-3">
+    <label for="reactFinalScore" class="form-label">React Final Score</label>
+    <input type="number" class="form-control" id="reactFinalScore" name="reactFinalScore" min="1" max="100" required>
+  </div>
+
+  <!-- Multiple Company and Date fields -->
+  <div id="companyDatesContainer">
+    <div class="mb-3 company-date-group">
+      <label for="companyName" class="form-label">Company Name</label>
+      <input type="text" class="form-control" name="companyName" required>
+      <label for="date" class="form-label">Date</label>
+      <input type="date" class="form-control" name="date" required>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" onclick="addCompanyDateField()">Add Company and Date</button>
+
+  <div class="mb-3">
+    <label for="result" class="form-label">Result</label>
+    <select class="form-select" id="result" name="result" required>
+      <option value="PASS">PASS</option>
+      <option value="FAIL">FAIL</option>
+      <option value="On Hold">On Hold</option>
+      <option value="Didn’t Attempt">Didn’t Attempt</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+    </div>
+    
+   
+<script>
+  function addCompanyDateField() {
+    var container = document.getElementById('companyDatesContainer');
+    var group = document.createElement('div');
+    group.className = 'mb-3 company-date-group';
+    group.innerHTML = `
+      <label for="companyName" class="form-label">Company Name</label>
+      <input type="text" class="form-control" name="companyName" required>
+      <label for="date" class="form-label">Date</label>
+      <input type="date" class="form-control" name="date" required>
+    `;
+    container.appendChild(group);
+  }
+</script>
+    
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
