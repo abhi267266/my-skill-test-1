@@ -1,0 +1,10 @@
+Name,Email,College,Status,DSA Final Score,WebD Final Score,React Final Score,Interviews,Result,Created By
+Abhishek Pathak,abhi267266@gmail.com,kaliga,placed,34,34,45,"{
+  companyName: 'lashflsa',
+  date: '2023-06-25',
+  _id: new ObjectId(""648c20d6aadd22336b18f549"")
+},{
+  companyName: 'ewlwejflk',
+  date: '2023-06-18',
+  _id: new ObjectId(""648c20d6aadd22336b18f54a"")
+}",PASS,648c1991b40735069f348fbe

@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Student Table</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>working!!</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            Student Management
+          </a>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <% if(locals.employee) { %> 
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="#"><%=locals.employee.name%></a></span>
+                  </li>
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="/employee/log-out">logout</a>
+                  </li>
+                    <%}%>
+    
+              </ul>
+          </div>
+        </div>
+        </nav>
+  <div class="container">
+    <h1>Student Table</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>College</th>
+          <th>Status</th>
+          <th>DSA Final Score</th>
+          <th>WebD Final Score</th>
+          <th>React Final Score</th>
+          <th>Interviews</th>
+          <th>Result</th>
+          <th>Created By</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iterate over your student data and generate rows -->
+        <% students.forEach(function(student) { %>
+          <tr>
+            <td><%= student.name %></td>
+            <td><%= student.email %></td>
+            <td><%= student.college %></td>
+            <td><%= student.status %></td>
+            <td><%= student.courseScores.dsaFinalScore %></td>
+            <td><%= student.courseScores.webDFinalScore %></td>
+            <td><%= student.courseScores.reactFinalScore %></td>
+            <td>
+              <!-- Iterate over interviews and display each company name and date -->
+              <% student.interviews.forEach(function(interview) { %>
+                <%= interview.companyName %> - <%= interview.date %><br>
+              <% }) %>
+            </td>
+            <td><%= student.result %></td>
+            <td><%= student.createdBy.name %></td>
+            <td>
+              <!-- Delete button with Bootstrap styling -->
+              <a href="/student/delete/<%=student._id%>" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <a href="/student/download" class="btn btn-primary mt-3">Download CSV</a>
+  </div>
+
+  <!-- Include Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script type="module" src="/js/asynDelete.js"></script>
 </body>
 </html>

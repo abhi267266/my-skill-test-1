@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(express.static('./assets'));
+
+// no static file
+// app.use(express.static('./assets'));
 
 // Define your routes here
 app.set('view engine', 'ejs');
